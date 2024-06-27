@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+{namespace my=GdprExtensionsCom\GdprExtensionsComGrh\ViewHelpers}
+<head>
+    <meta charset="UTF-8">
+    <title><f:translate key="title.txt" extensionName="GdprTwoXGooglereviewListing" /></title>
+</head>
+
+<body>
+<style type="text/css">
+    #gdpr-extensions-com-cookie-container .gdprInner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-height: 600px;
+    }
+
+    #gdpr-extensions-com-cookie-container div.privacy-msg {
+        max-width: 1020px;
+        padding: 18px;
+        width: 100% !important;
+        height: 100% !important;
+        position: relative;
+        max-height: 500px;
+        margin: 30px;
+    }
+
+    #gdpr-extensions-com-cookie-container div.privacy-msg .wraper {
+        width: 100%;
+        border-radius: 6px;
+        padding: 6% 85px;
+        text-align: center;
+        -webkit-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        -moz-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        height: 100%;
+        position: relative;
+        /* display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column; */
+    }
+
+    #gdpr-extensions-com-cookie-container .checkbox-label {
+        display: flex;
+        justify-content: center;
+    }
+
+    #gdpr-extensions-com-cookie-container .link-action {
+        display: block;
+        background: #ee7202;
+        color: white;
+        padding: 8px 23px;
+        width: fit-content;
+        margin: 20px auto;
+    }
+
+    #gdpr-extensions-com-cookie-container .link-action.square {
+        border-radius: 6px;
+    }
+
+    #gdpr-extensions-com-cookie-container .link-action.round {
+        border-radius: 100px;
+    }
+
+    #gdpr-extensions-com-cookie-container .link-action:hover {
+        color: white;
+    }
+
+    #gdpr-extensions-com-cookie-container .checkbox-label input {
+        margin-right: 12px
+    }
+
+    #gdpr-extensions-com-cookie-container .wraper .bg-image {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: -1;
+        border-radius: 6px;
+        height: 100%;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    /* for widget*/
+    .gdpr-extensions-com-cookie-fab-mo {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        color: white;
+        font-size: 48px;
+        text-align: center;
+
+        /* Positioning Properties */
+        position: fixed;
+        /* Use 'absolute' if it should be relative to its nearest positioned ancestor (instead of relative to the viewport) */
+        bottom: 20px;
+        /* Space from the bottom */
+        left: 20px;
+        /* Space from the left */
+    }
+
+    .gdpr-extensions-com-cookie-fab-mo.right {
+        right: 20px;
+        left: unset;
+    }
+
+    #gdpr-extensions-com-cookie-model.modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    #gdpr-extensions-com-cookie-model .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px 0;
+        border: 1px solid #888;
+        width: 30%;
+        border-radius: 6px;
+    }
+
+    .mb-0 {
+        margin-bottom: 0;
+    }
+
+    #gdpr-extensions-com-cookie-model .title{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 11px;
+        margin: 0 16px 16px 16px;
+    }
+
+    #gdpr-extensions-com-cookie-model .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        BACKGROUND: #dad9da;
+        COLOR: black;
+        PADDING: 15px 6px 13px 6px;
+        line-height: 0;
+        border-radius: 3px;
+
+    }
+
+    #gdpr-extensions-com-cookie-model .cookie-section {
+        padding: 22px 11px;
+        background: #ffe8d8;
+        border-radius: 6px;
+        margin: 0 16px 20px 16px;
+    }
+
+    #gdpr-extensions-com-cookie-model .cookie-section .cookie-inner {
+        margin-bottom: 13px;
+    }
+
+    #gdpr-extensions-com-cookie-model .cookie-section p {
+        margin-top: 0;
+    }
+
+    #gdpr-extensions-com-cookie-model .close:hover,
+    #gdpr-extensions-com-cookie-model .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    #gdpr-extensions-com-cookie-model .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 22px;
+    }
+
+    #gdpr-extensions-com-cookie-model .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    #gdpr-extensions-com-cookie-model .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 34px;
+        /* This line makes the slider rounded */
+    }
+
+    #gdpr-extensions-com-cookie-model .btn-lg {
+        background: #EE7202;
+        border-radius: 6px;
+        border: 1px solid #EE7202;
+        color: #fff;
+        padding: 8px 17px;
+        cursor: pointer;
+        margin-top: 0;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    #gdpr-extensions-com-cookie-model .btn-lg.disabled {
+        background: #dad9da;
+        color: black;
+        cursor: default;
+        border-color: #dad9da;
+    }
+
+    #gdpr-extensions-com-cookie-model .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 50%;
+        /* This line makes the button inside the slider rounded */
+    }
+
+    #gdpr-extensions-com-cookie-model input:checked+.slider {
+        background-color: #ee7202;
+    }
+
+    #gdpr-extensions-com-cookie-model input:focus+.slider {
+        box-shadow: 0 0 1px #ee7202;
+    }
+
+    #gdpr-extensions-com-cookie-model input:checked+.slider:before {
+        -webkit-transform: translateX(28px);
+        -ms-transform: translateX(28px);
+        transform: translateX(28px);
+    }
+
+    .d-flex {
+        display: flex !important;
+    }
+
+    .justify-content-btw {
+        justify-content: space-between !important;
+    }
+
+    .align-items-ctr {
+        align-items: center !important;
+    }
+
+    #gdpr-inner:not(.gdprInner) iframe {
+        height: 100vh;
+    }
+    #gdpr-extensions-com-cookie-container .bgComtainer-image .overlay {
+        position: absolute;
+        content: '';
+        background: black;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        opacity: 0.3;
+    }
+    #gdpr-extensions-com-cookie-model .accept-all {
+        padding: 20px 11px 4px 11px;
+        box-shadow: rgba(0, 0, 0, 0.06) 0px -2px 3px;
+        display: flex;
+        justify-content: center;
+    }
+    #gdpr-extensions-com-cookie-model .scroll {
+        max-height: 410px;
+        overflow-y: auto;
+    }
+</style>
+{my:getTwoClickSolutions() -> f:variable(name: 'twoClickSol')}
+<f:variable name="decodedArray" value="{twoClickSol -> v:format.json.decode()}" />
+
+<img src="{cookieWidgetData.cookie_widget_image}"
+     class="gdpr-extensions-com-cookie-fab-mo <f:format.raw>{cookieWidgetData.cookie_widget_position}</f:format.raw>" />
+<div id="gdpr-extensions-com-cookie-model" class="modal">
+    <div class="modal-content">
+        <div class="title">
+            <p><b><f:translate key="gdpr.twoclick.consent" extensionName="GdprTwoXGooglereviewListing" /></b></p>
+            <span class="close">&times;</span>
+        </div>
+        <div class="scroll">
+            <f:for each="{decodedArray}" as="sol" iteration="i">
+                <div class="cookie-section">
+                    <div class="d-flex justify-content-btw align-items-ctr cookie-inner">
+                        <p class="mb-0"><b>{sol.extensionTitle}</b></p>
+                        <label class="switch mb-0">
+                            <input type="checkbox" class="toggleButton" id="{i.index}"
+                                   data-ext-title="<f:format.raw>{sol.extensionKey}</f:format.raw>">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <p class="mb-0"><f:translate key="gdpr.twoclick.consent.desc" extensionName="GdprTwoXGooglereviewListing" /></p>
+                </div>
+            </f:for>
+        </div>
+        <div class="accept-all">
+            <button type="button" class="btn-lg"><f:translate key="gdpr.accept.all" extensionName="GdprTwoXGooglereviewListing" /></button>
+        </div>
+
+    </div>
+</div>
+<f:asset.script identifier="2ClickSol">
+
+
+    /*
+
+_2ClickIframePrivacy Class contains methods for handling user consent about cookies.
+
+It internally uses cookies to remember user choices about privacy settings.
+
+Classes:
+    - privacy-msg: Used to style privacy message displayed within iframe
+    - toggleButton : Used by buttons which enables/disables specific services
+
+Methods:
+   - setConsentStatus(service,status) : Sets the consent status for a service and stores it as a cookie.
+   - deleteCookie(name) : Deletes the specified cookie.
+   - getConsentStatuses(): Returns a JSON object representing all the cookies whose consent was obtained.
+   - wrap(el, wrapper, type, text, heading): Adds 'privacy-msg' div element inside an iframe containing info about data security and obtain user’s consent
+   - EnableContent(type): Enables the iframe content once user provides consent.
+   - DisableContent(type,e): Disables the iframe content if user withdraws consent.
+   - Init(UserConfig) : Initializes the instance with user provided configurations.
+
+Properties:
+
+   - consentCookieName: Specifies the name of the cookie used for preserving user consent settings
+   - toggleButtons: Represents all buttons which enables/disables specific services.
+   - consentStatuses: Stores the statuses of users' consent for cookies
+
+ */
+
+    let arr = JSON.parse('<f:format.raw>{twoClickSol}</f:format.raw>');
+    console.log(arr);
+    document.addEventListener('DOMContentLoaded', () => {
+        _2ClickIframePrivacy.init('',arr)
+    });
+    let switchs = document.querySelectorAll('.switch .toggleButton');
+    let acceptBtn = document.querySelector('.accept-all .btn-lg');
+    acceptBtn.addEventListener('click', function() {
+        switchs.forEach((item, index)=>{
+            if(item.checked != true) {
+                item.click();
+                acceptBtn.disabled = true;
+                acceptBtn.classList.add('disabled');
+            }
+        })
+    })
+
+
+    for(let sol in arr) {
+
+        let solSetting = arr[sol];
+
+        var modal = document.getElementById("gdpr-extensions-com-cookie-model");
+        var btn = document.querySelectorAll(".gdpr-extensions-com-cookie-fab-mo");
+        var span = document.getElementsByClassName("close")[0];
+        btn.forEach((item, index) => {
+            item.addEventListener('click', function () {
+                modal.style.display = "block";
+            })
+        })
+
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+
+        var _2ClickIframePrivacy = new function () {
+
+            var consentCookieName = 'GDPR_Extensions_2ClickCookieConsent';
+            var toggleButtons = document.getElementsByClassName("toggleButton");
+            let gdprInner = document.getElementById('gdpr-inner')
+
+
+            // Initialize consent statuses:
+            var consentStatuses = getConsentStatuses();
+
+            var config = {
+                enableCookies: true,
+                useSessionCookie: true,
+                cookieNamespace: '_2ClickIPEnable-',
+                showContentLabel: 'Inhalt anzeigen',
+                rememberChoiceLabel: 'Auswahl merken',
+                privacyPolicyLabel: 'Datenschutzerklärung',
+                privacyPolicyUrl: false
+            };
+
+            this.types = new Array(
+                {
+                    type: 'video',
+                    description: solSetting.content,
+                    heading: solSetting.heading,
+                    btnColor: solSetting.buttonColor,
+                    textColor: solSetting.textColor,
+                    imagePath: solSetting.backgroundImage,
+                    imageStatus: solSetting.enableBackgroundImage,
+                    bgColor: solSetting.backgroundImageColor,
+                    buttonTextColor: solSetting.buttonTextColor,
+                    btnText: solSetting.buttonText,
+                    btnShape: solSetting.buttonShape,
+                },
+                {
+                    type: 'map',
+                    description: solSetting.content,
+                    heading: solSetting.heading,
+                    btnColor: solSetting.buttonColor,
+                    textColor: solSetting.textColor,
+                    imagePath: solSetting.backgroundImage,
+                    imageStatus: solSetting.enableBackgroundImage,
+                    bgColor: solSetting.backgroundImageColor,
+                    buttonTextColor: solSetting.buttonTextColor,
+                    btnText: solSetting.buttonText,
+                    btnShape: solSetting.buttonShape,
+                },
+                {
+                    type: 'calendar',
+                    description: '<f:format.raw>{YoutubeSettings.content}</f:format.raw><br />',
+                    heading: 'Zum Aktivieren des Videos bitte auf den Link klicken. Durch das Aktivieren von eingebetteten Videos werden Daten an den jeweiligen Anbieter übermittelt. Weitere Informationen können unserer Datenschutzerklärung entnommen werden.<br />'
+
+                }
+            );
+
+            function setConsentStatus(service, status) {
+                consentStatuses[service] = status;
+                
+                let cookie = getConsentStatuses();
+                if (cookie != {}) {
+                    deleteCookie(consentCookieName);
+                }
+                var d = new Date;
+                d.setTime(d.getTime() + 24 * 60 * 60 * 1000 * 365);
+                document.cookie = consentCookieName + "=" + JSON.stringify(consentStatuses) + ";path=/;expires=" + d.toGMTString();
+
+            }
+
+            function deleteCookie(name) {
+                // Create an expired date.
+                var expiredDate = new Date();
+                expiredDate.setTime(expiredDate.getTime() - (1000 * 3600)); // Subtracting 1 hour from current time
+
+                // Setting the cookie with an expired date deletes it.
+                document.cookie = name + "=; expires=" + expiredDate.toGMTString() + "; path=/";
+            }
+
+            function getConsentStatuses() {
+                var v = document.cookie.match('(^|;) ?' + consentCookieName + '=([^;]*)(;|$)');
+                return v ? JSON.parse(v[2]) : {};
+            }
+
+            // Create div-element within the respective iframe to display the defined data-security message and get consent for loading the iframe content.
+
+            function wrap(el, wrapper, type, text, heading, btnColor, textColor, imagePath, imageStatus, bgColor, buttonTextColor, btnText, btnShape) {
+                el.parentNode.insertBefore(wrapper, el);
+                wrapper.className = 'privacy-msg privacy-' + type + '-msg';
+                wrapper.style.width = el.clientWidth + 'px';
+                wrapper.style.height = el.clientHeight + 'px';
+                wrapper.innerHTML = imageStatus == 1 ? "<div class='bgComtainer-image'><img class='bg-image' src='" + imagePath + "'/><div class='overlay'></div>" : "";
+                wrapper.innerHTML += '<h2 style="color:' + textColor + '">' + heading + '</h2>';
+                wrapper.innerHTML += '<p class="description" style="color:' + textColor + '">' + text + '</p>' + '<a href="#foo" class="link-action ' + btnShape + '" style="background-color: ' + btnColor + ';color:' + buttonTextColor + '" onclick="_2ClickIframePrivacy.EnableContent(\'' + type + '\'); return false;">' + btnText + '</a>';
+                if (config.enableCookies) {
+                    wrapper.innerHTML = wrapper.innerHTML + '<label class="checkbox-label"  style="color:' + textColor + ';display: none"><input type="checkbox" checked style="border-color: ' + btnColor + '" name="remind-\'' + type + '\'" /> ' + config.rememberChoiceLabel + '</label>';
+                }
+                if (config.privacyPolicyUrl) {
+                    wrapper.innerHTML = wrapper.innerHTML + '<br /><a href="' + config.privacyPolicyUrl + '">' + config.privacyPolicyLabel + '</a>';
+                }
+                wrapper.innerHTML = '<div class="wraper" style="background-color: ' + bgColor + '"><p>' + wrapper.innerHTML + '</p></div>';
+                wrapper.appendChild(el);
+            }
+
+            this.EnableContent = function (type) {
+                var i;
+
+                // Cookies globally enabled by config?
+                var checkboxes = document.querySelectorAll('div.privacy-' + type + '-msg input');
+
+                if (config.enableCookies) {
+                    for (let i = 0; i < checkboxes.length; i++) {
+                        if (checkboxes[i].checked == true) {
+                            let service = checkboxes[i].parentNode.parentNode.nextElementSibling.getAttribute('data-2click-service'); // get service name from iframe
+                            debugger;
+                            setConsentStatus(service, '1');
+                        }
+                    }
+                }
+
+
+                var x = document.querySelectorAll('div.privacy-' + type + '-msg .wraper');
+                for (i = 0; i < x.length; i++) {
+                    while (x[i].firstChild) {
+                        x[i].removeChild(x[i].firstChild);
+                    }
+                }
+
+                x = document.querySelectorAll('div.privacy-' + type + '-msg');
+                for (i = 0; i < x.length; i++) {
+                    var parent = x[i].parentNode;
+
+                    // Move all children out of the element
+                    while (x[i].firstChild) parent.insertBefore(x[i].firstChild, x[i]);
+
+                    // Remove the empty element
+                    parent.removeChild(x[i]);
+                }
+
+                x = document.querySelectorAll('iframe[data-2click-service="' + type + '"]');
+                // debugger
+                for (i = 0; i < x.length; i++) {
+
+                    // debugger
+                    let serviceType = x[i].getAttribute("data-2click-service");
+                    if(serviceType === 'google_reviewlisting'){
+                        if(i == 0){
+                            let parent = x[i];
+                            let mapDiv = document.createElement('div');
+                            mapDiv.id = "map" + i;
+                            mapDiv.className = "map";
+                            parent.parentNode.insertBefore(mapDiv, parent.nextSibling)
+                            // debugger
+                            loadMapScript(x[i].nextElementSibling);
+                        }
+                        else {
+                            initMap((x[i].nextElementSibling));
+                        }
+                    }
+                    // debugger;
+                    x[i].src = x[i].getAttribute("data-src");
+                }
+
+                // If available, execute the callback that is defined for the currently active type
+                for (i = 0; i < this.types.length; i++) {
+                    if (this.types[i].type == type && this.types[i].callback) {
+                        window[this.types[i].callback]();
+                    }
+                }
+
+
+                for (let i = 0; i < toggleButtons.length; i++) {
+                    let extTitle = toggleButtons[i].getAttribute('data-ext-title');
+                    let service = extTitle; // assuming that extension title always has the service name at the third position
+
+                    // initially set the checkbox according to the cookie value
+
+                    toggleButtons[i].checked = Boolean(Number(consentStatuses[service])); // convert string to boolean
+
+                }
+                gdprInner?.classList.remove('gdprInner');
+                if(areAllChecked()) {
+                    acceptBtn.disabled = true;
+                    acceptBtn.classList.add('disabled');
+                }
+            }
+
+            function DisableContent(type, e) {
+                var i;
+
+                // Accessing all relevant checkboxes
+                var checkboxes = document.querySelectorAll('div.privacy-' + type + '-msg input');
+
+                for (let i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].checked == false) { // Checking if the checkbox is not checked
+                        let service = checkboxes[i].parentNode.parentNode.nextElementSibling.getAttribute('data-2click-service');
+                        setConsentStatus(service, '0'); // Set consent status to '0' indicating disapproval
+                    }
+                }
+
+                var x = document.querySelectorAll('iframe[data-2click-service="' + type + '"]');
+                for (i = 0; i < x.length; i++) {
+                    let dummy = x[i].innerHTML;
+                    // debugger
+
+                    x[i].src = ''; // Disabling the iframe by setting src as empty
+                    if(type == 'google_reviewlisting'){
+                        let elementToRemove = x[i].nextElementSibling;
+                        if(elementToRemove){
+                            elementToRemove.parentNode.removeChild(elementToRemove);
+                        }
+
+                    }
+                }
+
+                // If available, execute the callback that is defined for the currently active type
+                for (i = 0; i < e.length; i++) {
+                    if (e[i].type == type && e[i].callback) {
+                        window[e[i].callback]();
+                    }
+                }
+                gdprInner?.classList.add('gdprInner');
+                acceptBtn.disabled = false;
+                acceptBtn.classList.remove('disabled');
+            }
+
+            const loadMapScript = function (parent) {
+                // debugger;
+                const mapScript = document.createElement("script");
+                const body = document.querySelector("body");
+                const mapsApiKey = document.getElementById("mapApiKey").innerText;
+
+                mapScript.setAttribute(
+                    "src",
+                    `https://maps.googleapis.com/maps/api/js?key=${mapsApiKey}&libraries=geometry`
+                );
+
+                console.log("exec: ", `https://maps.googleapis.com/maps/api/js?key=${mapsApiKey}&libraries=geometry`);
+                body.insertAdjacentElement("beforeend", mapScript);
+
+                mapScript.onload = () => {
+                    initMap(parent);
+                };
+
+                mapScript.onerror = function (error) {
+                    console.error("Error loading Google Maps API:", error);
+                };
+            };
+
+            function initMap(parent) {
+
+                const latLongData = JSON.parse(document.getElementById("LatLongData").innerText);
+                const markerImagePath = document.getElementById("markerImagePath").innerText;
+                var firstKey = Object.keys(latLongData)[0];
+                var firstLocation = latLongData[Object.keys(latLongData)[0]];
+
+                // debugger;
+
+                const zoomButton = 1;
+                const satelliteView = 'SATELLITE';
+
+                const mapTypeIdMapping = {
+                    HYBRID: google.maps.MapTypeId.HYBRID,
+                    ROADMAP: google.maps.MapTypeId.ROADMAP,
+                    SATELLITE: google.maps.MapTypeId.SATELLITE,
+                    TERRAIN: google.maps.MapTypeId.TERRAIN,
+                };
+                // debugger;
+                const map = new google.maps.Map(parent, {
+                    zoom: 13,
+                    center: { lat: firstLocation.lat/1000000, lng: firstLocation.long/1000000 },
+                });
+
+                map.setOptions({
+                    zoomControl: zoomButton ? true : false,
+                });
+                // const locationMarkers = document.querySelectorAll(".location-marker");
+
+                latLongData.forEach((markerElement) => {
+
+                    const latitude = parseFloat(markerElement.lat);
+                    const longitude = parseFloat(markerElement.long);
+                    const bodyText = markerElement.address;
+
+                    const title = markerElement.title;
+                    let markerIcon;
+                    if (markerImagePath) {
+
+                        markerIcon = {
+                            url: `${window.location.origin}${markerImagePath}`, // url
+                            scaledSize: new google.maps.Size(70, 70), // scaled size
+                            origin: new google.maps.Point(0, 0), // origin
+                            anchor: new google.maps.Point(0, 0) // anchor
+                        };
+                    }
+
+                    if (!isNaN(latitude) && !isNaN(longitude)) {
+                        const marker = new google.maps.Marker({
+                            position: { lat: latitude/1000000, lng: longitude/1000000 },
+                            map: map,
+                            title: title,
+                            icon: markerIcon,
+                        });
+
+                        let contentString = `
+                    <div class="location-marker__info-window" style="padding: 6px 2px; max-width: 150px">
+                        <div class="location-marker__title" style="font-weight: bold; margin-bottom: 5px">${title}</div>
+                        <div class="location-marker__body-text" style="line-height: 1.4">${bodyText}</div>
+                    </div>
+                `;
+
+                        const infoWindow = new google.maps.InfoWindow({
+                            content: contentString,
+                        });
+
+                        marker.addListener("click", () => {
+                            infoWindow.open(map, marker);
+                        });
+
+
+                    }
+                });
+
+
+
+
+            }
+
+
+            this.init = function (Userconfig, solSetting, key) {
+
+                // Read UserConfiguration:
+                if (typeof Userconfig.enableCookies !== 'undefined') {
+                    config.enableCookies = Userconfig.enableCookies;
+                }
+                if (typeof Userconfig.useSessionCookie !== 'undefined') {
+                    config.useSessionCookie = Userconfig.useSessionCookie;
+                }
+                if (typeof Userconfig.cookieNamespace !== 'undefined') {
+                    config.cookieNamespace = Userconfig.cookieNamespace;
+                }
+                if (typeof Userconfig.privacyPolicyUrl !== 'undefined') {
+                    config.privacyPolicyUrl = Userconfig.privacyPolicyUrl;
+                }
+                if (typeof Userconfig.showContentLabel !== 'undefined') {
+                    config.showContentLabel = Userconfig.showContentLabel;
+                }
+                if (typeof Userconfig.rememberChoiceLabel !== 'undefined') {
+                    config.rememberChoiceLabel = Userconfig.rememberChoiceLabel;
+                }
+                if (typeof Userconfig.privacyPolicyLabel !== 'undefined') {
+                    config.privacyPolicyLabel = Userconfig.privacyPolicyLabel;
+                }
+
+                if (Array.isArray(Userconfig.CustomTypes)) {
+                    this.types = Userconfig.CustomTypes;
+                }
+                for (let i = 0; i < this.types.length; i++) {
+                    var selector = document.querySelectorAll('iframe[data-2click-type="' + this.types[i].type + '"]');
+
+                    for (let x = 0; x < selector.length; x++) {
+
+                        let service = selector[x].getAttribute('data-2click-service'); // get service name from iframe
+
+                        if (consentStatuses[service] !== '1') {
+
+                            wrap(selector[x], document.createElement('div'),
+                                service,
+                                solSetting[service].content,
+                                solSetting[service].heading,
+                                solSetting[service].buttonColor,
+                                solSetting[service].textColor,
+                                solSetting[service].backgroundImage,
+                                solSetting[service].enableBackgroundImage,
+                                solSetting[service].backgroundImageColor,
+                                solSetting[service].buttonTextColor,
+                                solSetting[service].buttonText,
+                                solSetting[service].buttonShape,
+                            );
+                        } else {
+                            if(service === 'google_reviewlisting'){
+                                let parent = selector[x];
+                                let mapDiv = document.createElement('div');
+                                mapDiv.id = "map" + i;
+                                mapDiv.className = "map";
+                                parent.parentNode.insertBefore(mapDiv, parent.nextSibling)
+                                loadMapScript(selector[x].nextElementSibling);
+                            }
+
+                            selector[x].src = selector[x].getAttribute("data-src");
+                            gdprInner?.classList.remove('gdprInner');
+                        }
+
+
+
+
+                    }
+
+                }
+
+
+                // Get all toggle buttons
+                // For each toggle button
+                for (let i = 0; i < toggleButtons.length; i++) {
+
+                    let extTitle = toggleButtons[i].getAttribute('data-ext-title');
+                    let service = extTitle;
+
+                    // initially set the checkbox according to the cookie value
+
+                    toggleButtons[i].checked = Boolean(Number(consentStatuses[service])); // convert string to boolean
+                    let wrapperFunctionData = this.types;
+
+                    // add event listener on checkbox change
+
+                    toggleButtons[i].addEventListener('change', function (e) {
+
+                        setConsentStatus(service, this.checked ? '1' : '0'); // convert boolean to number
+                        this.checked;
+
+                        if (this.checked == false) {
+
+                            DisableContent(service, wrapperFunctionData)
+                            wrapfunction(wrapperFunctionData,arr,service);
+
+                        } else {
+                            _2ClickIframePrivacy.EnableContent(service)
+                        }
+                    });
+                }
+
+                function wrapfunction(e ,settings ,key) {
+
+                    for (let i = 0; i < e.length; i++) {
+
+                        var selector = document.querySelectorAll('iframe[data-2click-type="' + e[i].type + '"]');
+                        for (let x = 0; x < selector.length; x++) {
+                            let service = selector[x].getAttribute('data-2click-service'); // get service name from iframe
+                            if(service == key){
+                                if (consentStatuses[service] !== '1') {
+                                    wrap(selector[x],
+                                        document.createElement('div'),
+                                        service, settings[service].content,
+                                        settings[service].heading,
+                                        settings[service].buttonColor,
+                                        settings[service].buttonTextColor,
+                                        settings[service].backgroundImage,
+                                        settings[service].enableBackgroundImage,
+                                        settings[service].backgroundImageColor,
+                                        settings[service].buttonTextColor,
+                                        settings[service].buttonText,
+                                        settings[service].buttonShape,
+                                    );
+                                } else {
+                                    selector[x].src = selector[x].getAttribute("data-src");
+                                }
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                if(areAllChecked()) {
+                    acceptBtn.disabled = true;
+                    acceptBtn.classList.add('disabled');
+                }
+
+            };
+        }
+    }
+    function areAllChecked() {
+        for(let i=0; i<switchs.length; i++){
+            if(!switchs[i].checked){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+</f:asset.script>
+
+
+</body>
+
+
+
+</html>

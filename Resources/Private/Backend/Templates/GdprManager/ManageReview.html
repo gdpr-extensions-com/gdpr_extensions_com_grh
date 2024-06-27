@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .setting-page *{
+        font-family: sans-serif;
+    }
+
+    .setting-page {
+        height: calc(100vh - 10px);
+        overflow-y: auto;
+    }
+
+    h1 {
+        font-size: 32px;
+        margin-bottom: 8px;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+
+    p {
+        color: #626262;
+    }
+
+    .txt-primary {
+        color: #EE7202;
+    }
+
+    .btn.btn-outline {
+        background-color: transparent;
+        border: 1px solid #EE7202;
+        color: #EE7202;
+    }
+
+    .back-img {
+        margin-bottom: 24px;
+    }
+
+    .api-container {
+        padding: 24px;
+        background-color: #FAFAFA;
+    }
+
+    .api-container p {
+        margin: 0 0 8px 0;
+    }
+
+    .apiKey {
+        padding: 8px 30px 8px 8px;
+        border: 1px solid #D1D1D1;
+        border-radius: 6px;
+        max-width: 410px;
+        width: 100%;
+        outline: none;
+        margin-right: 24px;
+    }
+
+    .btn{
+        background: #EE7202;
+        border: 0;
+        padding: 8px 16px;
+        border-radius: 6px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .btn.disable {
+        opacity: 0.5;
+    }
+
+    .info-container {
+        margin-top: 32px;
+        padding-bottom: 25px;
+    }
+
+    .step-container {
+        display: grid;
+        gap: 15px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 1140px) {
+        .step-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .steps {
+        padding: 10px;
+        border: 1px solid #FFA655;
+    }
+
+    .steps span {
+        font-size: 14px;
+        margin-bottom: 16px;
+        font-weight: 600;
+        display: block;
+    }
+
+    .steps .single-line {
+        font-weight: normal;
+        line-height: 21px;
+        margin-bottom: 2px;
+    }
+
+    .steps ul {
+        margin-top: 0;
+        padding-left: 24px;
+    }
+
+    .steps ul li {
+        font-size: 13px;
+        line-height: 35px;
+    }
+
+    .steps .visit {
+        display: flex;
+        align-items: center;
+    }
+
+    .steps .visit img{
+        margin-right: 30px;
+    }
+
+    .d-flex {
+        display: flex;
+    }
+
+    .cross {
+        position: relative;
+        width: 100%;
+        max-width: 474px;
+    }
+
+    .cross img {
+        position: absolute;
+        right: 31px;
+        top: 5px;
+        width: 16px;
+        cursor: pointer;
+    }
+
+    .swal-msg .msg {
+        position: absolute;
+        top: 17px;
+        right: 27px;
+    }
+
+    .swal-msg .msg .msg-container {
+        background: white;
+        display: flex;
+        align-items: center;
+        box-shadow: 0px 0px 12px 0px #00000012;
+        height: 56px;
+        padding: 0px 12px;
+        border-radius: 6px;
+    }
+
+    .swal-msg .msg img {
+        width: 24px;
+        margin-right: 11px;
+    }
+
+    .swal-msg .msg p {
+        margin: 0;
+    }
+
+    .invalid-err {
+        color: #E90B0B;
+        font-size: 14px;
+        margin: 4px 0;
+        display: block;
+        opacity: 0;
+    }
+</style>
+<body>
+<div class="setting-page">
+    <div class="header">
+        <h1><f:translate key="LLL:EXT:gdpr_extensions_com_grh/Resources/Private/Language/locallang.xlf:grh_name" /></h1>
+        <p><f:translate key="grh_desc" /></p>
+        <f:link.action action="list">
+            <f:image src="EXT:gdpr_extensions_com_grh/Resources/Public/Icons/back.svg" class="back-img"/>
+        </f:link.action>
+    </div>
+    <div class="api-container">
+        <p>Reviews Hub Key</p>
+        <div class="d-flex">
+            <div class="cross">
+                <input type="text" id="apikey" class="apiKey" name="apiKey[]" value="{apiKey}" placeholder="Enter Key Here">
+                <f:image src="EXT:gdpr_extensions_com_grh/Resources/Public/Icons/cross.svg" style="display: none;" />
+            </div>
+            <div id="actionBtns" class="connect">
+                <input type="button" value="Connect Hub" onclick="submitForm()" class="btn disable" disabled>
+            </div>
+        </div>
+        <span class="invalid-err">Incorrect Key</span>
+    </div>
+    <div class="info-container">
+        <h2>Generate Reviews Hub Key</h2>
+        <p>Please follow the below steps in order to generate your reviews hub key.</p>
+        <div class="step-container">
+            <div class="steps">
+                <span>1. Connect Your Google Account</span>
+                <ul>
+                    <li><span class="single-line">Visit <a href="https://dashboard.gdpr-extensions.com/home">https://dashboard.gdpr-extensions.com/home</a></span></li>
+                    <li><span class="single-line">Complete Sign-Up</span></li>
+                    <li><span class="single-line">Visit the reviews hub tool on your GDPR dashboard</span></li>
+                    <li><span class="single-line">Visit Reviews Sources</span></li>
+                    <li><span class="single-line">Connect your Google account</span></li>
+                </ul>
+            </div>
+            <div class="steps">
+                <span>2. Create Reviews Hub</span>
+                <ul>
+                    <li><span class="single-line">Navigate to Reviews Hub Tab</span></li>
+                    <li><span class="single-line">Create a new Reviews Hub</span></li>
+                    <li><span class="single-line">Select the desired website</span></li>
+                    <li><span class="single-line">Connect one or multiple Google businesses to your website</span></li>
+                    <li><span class="single-line">You can also filter the reviews from the filters step</span></li>
+                </ul>
+            </div>
+            <div class="steps">
+                <span>3. Connect Hub</span>
+                <ul>
+                    <li><span class="single-line">From the actions button on the created reviews hub, copy the API key</span></li>
+                    <li><span class="single-line">Paste the Key above</span></li>
+                    <li><span class="single-line">Click on “Connect Hub”</span></li>
+                    <li><span class="single-line">When adding the content element the filtered reviews should show successfully on your website!</span></li>
+                </ul>
+            </div>
+            <div class="steps">
+                <span>4. Run Scheduler</span>
+                <ul>
+                    <li><span class="single-line">Visit <b>Scheduler</b> page on your TYPO3 project</span></li>
+                    <li><span class="single-line">Run or execute the task :<br><b>Fetch Google Reviews (gdpr_extensions_com_grh)</b></span></li>
+                </ul>
+            </div>
+            <div class="steps">
+                <span>5. Add Content Element</span>
+                <ul>
+                    <li><span class="single-line">Customize content on your desired page, under the section “<b>GDPR-Extensions-com</b>” you can add the content element “<b>Google Reviews Header</b>”</span></li>
+                    <li><span class="single-line">Publish the changes and reviews will show successfully</span></li>
+                </ul>
+            </div>
+            <div class="steps">
+                <span class="txt-primary">Explore more products from GDPR-Extensions</span>
+                <div class="visit">
+                    <f:image src="EXT:gdpr_extensions_com_grh/Resources/Public/Icons/Product.svg" alt="Product Icon"/>
+                    <a href="https://www.gdpr-extensions.com/gdpr-solutions" target="_blank">
+                        <button type="button" class="btn btn-outline">Visit</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="swal-msg">
+        <div class="msg success-msg" style="display: none;">
+            <div class="msg-container">
+                <f:image src="EXT:gdpr_extensions_com_grh/Resources/Public/Icons/successAuth.svg" />
+                <p>Hub Connected Successfully</p>
+            </div>
+        </div>
+        <div class="msg failed-msg" style="display: none;">
+            <div class="msg-container">
+                <f:image src="EXT:gdpr_extensions_com_grh/Resources/Public/Icons/failedAuth.svg" />
+                <p>Failed to connect hub</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const saveLocationApi ='<f:format.raw>{uploadImageUrl}</f:format.raw>';
+    const connectBtn = document.querySelector('.connect .btn');
+    const apiKeyInput = document.querySelector('.apiKey');
+    const crossImg = document.querySelector('.cross img');
+    const successMsg = document.querySelector('.success-msg');
+    const failedMsg = document.querySelector('.failed-msg');
+    const invalidErr = document.querySelector('.invalid-err');
+    function submitForm(identifier) {
+        invalidErr.style.opacity = "0";
+        if(identifier == 'cross') {
+            apiKeyInput.value = '';
+            crossImg.style.display = "none";
+            connectBtn.setAttribute('disabled', true);
+            connectBtn.classList.add('disable');
+        }
+        var rootPageId = '<f:format.raw>{rootPid}</f:format.raw>';
+        var apiKeys = document.querySelectorAll('.apiKey');
+
+        var data = {
+            actionType: 'addLocation',
+            locations: []
+        };
+
+        if(apiKeys.length == 0){
+            data.locations.push({
+                rootPageId: rootPageId,
+                apiKey: apiKeys.value
+            });
+        }else{
+            for (var i = 0; i < apiKeys.length; i++) {
+                data.locations.push({
+                    rootPageId: rootPageId,
+                    apiKey: apiKeys[i].value
+                });
+            }
+        }
+        fetch(saveLocationApi, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            if(data.status == true) {
+                successMsg.style.display = "block";
+                connectBtn.setAttribute('disabled', true);
+                connectBtn.classList.add('disable');
+                setTimeout(()=>{
+                    successMsg.style.display = "none";
+                }, 3000)
+            } else if(data.status == false){
+                failedMsg.style.display = "block";
+                invalidErr.style.opacity = "1";
+                setTimeout(()=>{
+                    failedMsg.style.display = "none";
+                }, 3000)
+            }
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+
+    }
+
+    const apiValueCheck = () => {
+        if(apiKeyInput.value == '') {
+            connectBtn.setAttribute('disabled', true);
+            connectBtn.classList.add('disable');
+            crossImg.style.display = "none";
+        } else {
+            connectBtn.removeAttribute('disabled');
+            connectBtn.classList.remove('disable');
+            crossImg.style.display = "block";
+        }
+    }
+
+    apiKeyInput.addEventListener('input', apiValueCheck);
+    crossImg.addEventListener('click', function() {
+        submitForm('cross');
+    });
+    apiValueCheck();
+
+
+</script>
+
+</body>
+</html>

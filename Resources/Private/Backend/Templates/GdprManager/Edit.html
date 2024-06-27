@@ -1,0 +1,53 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+<f:layout name="Default" />
+
+This template displays a EDIT form for the current domain object.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+Resources:
+Private:
+Backend:
+Templates:
+GdprManager:
+Edit.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="Buttons">
+
+</f:section>
+
+
+<f:section name="Content">
+    <style>
+        .btn-bg {
+            background: #EE7202;
+            border-radius: 6px;
+            border: 1px solid #EE7202;
+            color: #fff;
+            padding: 8px 17px;
+            margin-top: 12px;
+            cursor: pointer;
+        }
+    </style>
+    <div class="d-none">
+        <span id="uploadImageUrl">{uploadImageUrl}</span>
+    </div>
+    <h1><f:translate key="gdpr.heading" extensionName="GdprExtensionsComGrh" /></h1>
+
+
+    <f:flashMessages />
+
+    <f:render partial="FormErrors" />
+
+    <f:form action="update" name="gdprManager" object="{gdprManager}">
+        <f:render partial="GdprManager/FormFields" arguments="{gdprManager: gdprManager, googlemaps: googlemaps, google_review: google_review, sites: sites}" />
+        <f:form.submit value="{f:translate(key:'save.btn', extensionName: 'GdprExtensionsComGrh')}" class="btn btn-default btn-bg" style="display: none;"/>
+    </f:form>
+</f:section>
+</html>

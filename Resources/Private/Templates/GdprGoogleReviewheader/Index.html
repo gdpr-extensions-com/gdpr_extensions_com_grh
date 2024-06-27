@@ -1,0 +1,341 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+    {namespace my=GdprExtensionsCom\GdprExtensionsComGrh\ViewHelpers}
+    {namespace v=FluidTYPO3\Vhs\ViewHelpers}
+    <f:layout name="Default" />
+    <f:section name="content">
+        <style>
+        .review-header-main{
+            border-radius: 8px;
+            box-shadow: 0 0.5rem 1.2rem rgba(0,0,0,.2);
+            padding: 20px;
+            margin: 20px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            line-height: 1;
+        }
+        .review-header-main .google-icon{
+            width: 70px;
+            height: auto;
+            margin-left: 5px;
+        }
+        .review-header-main .stars-icons{
+            margin: 0 5px;
+        }
+        .review-header-main .stars-icons .review__star {
+            margin: -2px;
+        }
+
+        #gdpr-extensions-com-cookie-container .gdprInner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-height: 600px;
+        }
+
+        #gdpr-extensions-com-cookie-container div.privacy-msg {
+            max-width: 1020px;
+            padding: 18px;
+            width: 100% !important;
+            height: 100% !important;
+            position: relative;
+            max-height: 500px;
+            margin: 30px;
+        }
+
+        #gdpr-extensions-com-cookie-container div.privacy-msg .wraper {
+            width: 100%;
+            border-radius: 6px;
+            padding: 6% 85px;
+            text-align: center;
+            -webkit-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            -moz-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            height: 100%;
+            position: relative;
+            /*height: 100%;*/
+            /*display: flex;*/
+            /*justify-content: center;*/
+            /*align-items: center;*/
+            /*flex-direction: column;*/
+        }
+
+        #gdpr-extensions-com-cookie-container .checkbox-label {
+            display: flex;
+            justify-content: center;
+        }
+
+        #gdpr-extensions-com-cookie-container .link-action {
+            display: block;
+            background: #ee7202;
+            color: white;
+            padding: 8px 23px;
+            width: fit-content;
+            margin: 20px auto;
+        }
+
+        #gdpr-extensions-com-cookie-container .link-action.square {
+            border-radius: 6px;
+        }
+
+        #gdpr-extensions-com-cookie-container .link-action.round {
+            border-radius: 100px;
+        }
+
+        #gdpr-extensions-com-cookie-container .link-action:hover {
+            color: white;
+        }
+
+        #gdpr-extensions-com-cookie-container .checkbox-label input {
+            margin-right: 12px
+        }
+
+        #gdpr-extensions-com-cookie-container .wraper .bg-image {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            border-radius: 6px;
+            height: 100%;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        /* for widget*/
+        .gdpr-extensions-com-cookie-fab-mo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            color: white;
+            font-size: 48px;
+            text-align: center;
+
+            /* Positioning Properties */
+            position: fixed;
+            /* Use 'absolute' if it should be relative to its nearest positioned ancestor (instead of relative to the viewport) */
+            bottom: 20px;
+            /* Space from the bottom */
+            left: 20px;
+            /* Space from the left */
+        }
+
+        .gdpr-extensions-com-cookie-fab-mo.right {
+            right: 20px;
+            left: unset;
+        }
+
+        #gdpr-extensions-com-cookie-model.modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        #gdpr-extensions-com-cookie-model .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px 0;
+            border: 1px solid #888;
+            width: 30%;
+            border-radius: 6px;
+        }
+
+        .mb-0 {
+            margin-bottom: 0;
+        }
+
+        #gdpr-extensions-com-cookie-model .title{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 11px;
+            margin: 0 16px 16px 16px;
+        }
+
+        #gdpr-extensions-com-cookie-model .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            BACKGROUND: #dad9da;
+            COLOR: black;
+            PADDING: 15px 6px 13px 6px;
+            line-height: 0;
+            border-radius: 3px;
+
+        }
+
+        #gdpr-extensions-com-cookie-model .cookie-section {
+            padding: 22px 11px;
+            background: #ffe8d8;
+            border-radius: 6px;
+            margin: 0 16px 20px 16px;
+        }
+
+        #gdpr-extensions-com-cookie-model .cookie-section .cookie-inner {
+            margin-bottom: 13px;
+        }
+
+        #gdpr-extensions-com-cookie-model .cookie-section p {
+            margin-top: 0;
+        }
+
+        #gdpr-extensions-com-cookie-model .close:hover,
+        #gdpr-extensions-com-cookie-model .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #gdpr-extensions-com-cookie-model .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 22px;
+        }
+
+        #gdpr-extensions-com-cookie-model .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        #gdpr-extensions-com-cookie-model .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 34px;
+            /* This line makes the slider rounded */
+        }
+
+        #gdpr-extensions-com-cookie-model .btn-lg {
+            background: #EE7202;
+            border-radius: 6px;
+            border: 1px solid #EE7202;
+            color: #fff;
+            padding: 8px 17px;
+            cursor: pointer;
+            margin-top: 0;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #gdpr-extensions-com-cookie-model .btn-lg.disabled {
+            background: #dad9da;
+            color: black;
+            cursor: default;
+            border-color: #dad9da;
+        }
+
+        #gdpr-extensions-com-cookie-model .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 50%;
+            /* This line makes the button inside the slider rounded */
+        }
+
+        #gdpr-extensions-com-cookie-model input:checked+.slider {
+            background-color: #ee7202;
+        }
+
+        #gdpr-extensions-com-cookie-model input:focus+.slider {
+            box-shadow: 0 0 1px #ee7202;
+        }
+
+        #gdpr-extensions-com-cookie-model input:checked+.slider:before {
+            -webkit-transform: translateX(28px);
+            -ms-transform: translateX(28px);
+            transform: translateX(28px);
+        }
+
+        .d-flex {
+            display: flex !important;
+        }
+
+        .justify-content-btw {
+            justify-content: space-between !important;
+        }
+
+        .align-items-ctr {
+            align-items: center !important;
+        }
+
+        #gdpr-inner:not(.gdprInner) iframe {
+            height: 100vh;
+        }
+        #gdpr-extensions-com-cookie-container .bgComtainer-image .overlay {
+            position: absolute;
+            content: '';
+            background: black;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        #gdpr-extensions-com-cookie-model .accept-all {
+            padding: 20px 11px 4px 11px;
+            box-shadow: rgba(0, 0, 0, 0.06) 0px -2px 3px;
+            display: flex;
+            justify-content: center;
+        }
+        #gdpr-extensions-com-cookie-model .scroll {
+            max-height: 410px;
+            overflow-y: auto;
+        }
+
+    </style>
+        <f:if condition="{ratingTotalType} || {ratingFilteredType}">
+            <div class="gdpr-extensions-com-cookie-container"
+                id="gdpr-extensions-com-cookie-container">
+                <div class="gdprInner" style="width:100%; height:100%;">
+                    <div class="review-header-main"
+                        style="color: {data.gdpr_color_of_text_header}">
+
+                        <strong><f:translate key="{ratingTotalType}" extensionName="GdprExtensionsComGrh" /></strong>
+                        <span class="stars-icons">
+                            <f:render partial="Stars"
+                                arguments="{stars:reviewsHearder.average_rating_total_reviews}" />
+                        </span>
+                        <strong>{reviewsHearder.total_reviews}
+                            <f:translate key="reviews" extensionName="GdprExtensionsComGrh" />
+                            </strong>
+                        <f:translate key="on" extensionName="GdprExtensionsComGrh" />
+                        <f:image
+                            class="google-icon"
+                            src="EXT:gdpr_extensions_com_grh/Resources/Public/Icons/google-icon.png"
+                            alt="google-icon" />
+                    </div>
+                </div>
+            </div>
+
+        </f:if>
+
+    </f:section>
+
+</html>

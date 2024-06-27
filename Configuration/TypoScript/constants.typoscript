@@ -1,0 +1,29 @@
+plugin.tx_gdprextensionscomgrh_gdprgoogle_reviewheader {
+    view {
+        # cat=plugin.tx_gdprextensionscomgrh_gdprgoogle_reviewheader/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:gdpr_extensions_com_grh/Resources/Private/Templates/
+        # cat=plugin.tx_gdprextensionscomgrh_gdprgoogle_reviewheader/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:gdpr_extensions_com_grh/Resources/Private/Partials/
+        # cat=plugin.tx_gdprextensionscomgrh_gdprgoogle_reviewheader/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:gdpr_extensions_com_grh/Resources/Private/Layouts/
+    }
+    persistence {
+        # cat=plugin.tx_gdprextensionscomgrh_gdprgoogle_reviewheader//a; type=string; label=Default storage PID
+        storagePid =
+    }
+}
+
+module.tx_gdprextensionscomgrh_gdprmanager {
+    view {
+        # cat=module.tx_gdprextensionscomgrh_gdprmanager/file; type=string; label=Path to template root (BE)
+        templateRootPath = EXT:gdpr_extensions_com_grh/Resources/Private/Backend/Templates/
+        # cat=module.tx_gdprextensionscomgrh_gdprmanager/file; type=string; label=Path to template partials (BE)
+        partialRootPath = EXT:gdpr_extensions_com_grh/Resources/Private/Backend/Partials/
+        # cat=module.tx_gdprextensionscomgrh_gdprmanager/file; type=string; label=Path to template layouts (BE)
+        layoutRootPath = EXT:gdpr_extensions_com_grh/Resources/Private/Backend/Layouts/
+    }
+    persistence {
+        # cat=module.tx_gdprextensionscomyoutube_gdprmanager//a; type=string; label=Default storage PID
+        storagePid =
+    }
+}
